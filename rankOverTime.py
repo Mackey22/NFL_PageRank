@@ -50,11 +50,32 @@ def intify(word):
 team = teams.Teams()
 weight = weights.Weights(team)
 
-with open('Charts/overtime.csv', 'w+') as chart:
+# with open('Charts/overtime.csv', 'w+') as chart:
+# 	chart.write('Years,')
+# 	for i in range(31):
+# 		chart.write(team.getTeamName(i) + ',')
+# 	chart.write(team.getTeamName(31) + '\n')
+# 	for filename in os.listdir('Results'):
+# 		weight.refresh()
+# 		with open('Results/' + filename) as results:
+# 			reader = csv.reader(results)
+# 			for row in reader:
+# 				if len(row) == 0 or row[0] == 'Week' or row[0] == '':
+# 					continue
+# 				playoffs = (type(intify(row[0])) is int)
+# 				if row[7] == row[8]:
+# 					weight.recordGame(row[4], row[6], playoffs, True)
+# 				else:
+# 					weight.recordGame(row[4], row[6], playoffs)
+# 		weight.reduce()
+# 		pr = pageRanks.pageRanks(weight, team, True)
+# 		chart.write(filename[:4] + ',' + pr.toCsv())
+
+with open('Charts/rankingsRegSeason.csv', 'w+') as chart:
 	chart.write('Years,')
 	for i in range(31):
-		chart.write(team.getTeamName(i) + ',')
-	chart.write(team.getTeamName(31) + '\n')
+		chart.write(str(i + 1) + ',')
+	chart.write(str(32) + '\n')
 	for filename in os.listdir('Results'):
 		weight.refresh()
 		with open('Results/' + filename) as results:
@@ -63,13 +84,16 @@ with open('Charts/overtime.csv', 'w+') as chart:
 				if len(row) == 0 or row[0] == 'Week' or row[0] == '':
 					continue
 				playoffs = (type(intify(row[0])) is int)
+				# Not counting playoff games!!
+				if not playoffs:
+					continue
 				if row[7] == row[8]:
 					weight.recordGame(row[4], row[6], playoffs, True)
 				else:
 					weight.recordGame(row[4], row[6], playoffs)
 		weight.reduce()
 		pr = pageRanks.pageRanks(weight, team, True)
-		chart.write(filename[:4] + ',' + pr.toCsv())
+		chart.write(filename[:4] + ',' + pr.toOrder())
 
 # Things to remark on 
 # Difference in 1 iteration vs. converging iteration - Difficulty of schedule/division

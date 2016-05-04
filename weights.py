@@ -9,7 +9,8 @@ class Weights:
 		self.wins = [[0 for i in range(NUM_TEAMS)] for j in range(NUM_TEAMS)]
 		self.norm = [[0 for i in range(NUM_TEAMS)] for j in range(NUM_TEAMS)]
 		self.numGames = [0 for i in range(NUM_TEAMS)]
-		self.teams = teams	
+		self.teams = teams
+		self.draftOrder = ["" for i in range(NUM_TEAMS)]
 
 	def recordGame(self, winner, loser, playoffs, tie=False):
 		numLos = self.teams.getTeamNum(loser)
@@ -49,4 +50,45 @@ class Weights:
 		self.wins = [[0 for i in range(NUM_TEAMS)] for j in range(NUM_TEAMS)]
 		self.norm = [[0 for i in range(NUM_TEAMS)] for j in range(NUM_TEAMS)]
 		self.numGames = [0 for i in range(NUM_TEAMS)]
+		self.draftOrder = ["" for i in range(NUM_TEAMS)]
+
+	def getNumWins(self, teamNum):
+		global NUM_TEAMS
+		counter = 0
+		for i in range(NUM_TEAMS):
+			counter += self.wins[i][teamNum]
+		return counter
+
+	######## Possibly wrong ########
+	def orderTeams(self, tms, highestPos, lowestPos):
+		print self.draftOrder
+		teamWins = [self.getNumWins(teamNum) for teamNum in tms]
+		properOrder = []
+		for i in range(len(tms)):
+			mostWins = -1
+			mostWinsInd = 0
+			for j in range(len(tms)):
+				if teamWins[j] > mostWins:
+					mostWins = teamWins[j]
+					mostWinsInd = j
+			properOrder.append(tms[mostWinsInd])
+			teamWins[mostWinsInd] = -1
+			mostWins = -1
+			mostWinsInd = 0
+		for i in range(len(properOrder)):
+			self.draftOrder[highestPos + i] = properOrder[i]
+
+	def toDraftOrder(self):
+		ranks = ""
+		played = [False for i in range(32)]
+		for tm in self.draftOrder:
+			played[tm] = True
+			ranks += self.teams.oppTeams[tm] + ","
+		ranks = ranks[0 : -1] + "\n"
+		return ranks
+
+
+
+
+
 

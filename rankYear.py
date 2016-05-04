@@ -53,7 +53,7 @@ def intify(word):
 # TODO - Ask for user input for a year
 
 # Update the rows and end up with the final weights for each edge
-with open('Results/2008.csv') as results:
+with open('Results/2007.csv') as results:
 	reader = csv.reader(results)
 	for row in reader:
 		if len(row) == 0 or row[0] == 'Week' or row[0] == '':

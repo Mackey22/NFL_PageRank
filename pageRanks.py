@@ -64,7 +64,7 @@ class pageRanks:
 		sortedDict = sorted(valDict.items(), key=operator.itemgetter(1), reverse=True)
 		for (key, val) in sortedDict:
 			ranks += key + ","
-		ranks = ranks[0 : -1]
+		ranks = ranks[0 : -1] + "\n"
 		return ranks
 
 

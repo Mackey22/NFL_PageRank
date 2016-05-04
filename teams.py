@@ -34,6 +34,7 @@ class Teams:
 		self.checkAdd(keys, 'Los Angeles Raiders', 'Oakland Raiders')
 		return self.teamNum
 
+
 	def addTeam(self, teamName):
 		self.teams[teamName] = self.teamNum
 		self.oppTeams[self.teamNum] = teamName
